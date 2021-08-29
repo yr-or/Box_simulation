@@ -21,6 +21,8 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "RectI.h"
+#include "ChiliWin.h"
+#include <sstream>
 
 Game::Game( MainWindow& wnd )
 	:
@@ -43,6 +45,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	RectI subregion = RectI( 90, 180, 0, 90 );
-	gfx.DrawSprite(0, 0, subregion, surf);
+	gfx.DrawSprite( wnd.mouse.GetPosX(), wnd.mouse.GetPosY(), { 90, 180, 90, 180 }, Graphics::GetScreenRect(), surf );
 }

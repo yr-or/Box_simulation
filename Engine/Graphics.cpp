@@ -252,6 +252,11 @@ Graphics::~Graphics()
 	if( pImmediateContext ) pImmediateContext->ClearState();
 }
 
+const RectI Graphics::GetScreenRect()
+{
+	return RectI(0, ScreenWidth, 0, ScreenHeight);
+}
+
 void Graphics::EndFrame()
 {
 	HRESULT hr;
@@ -331,6 +336,11 @@ void Graphics::DrawSprite(int x, int y, const Surface& sprite)
 
 void Graphics::DrawSprite( int x, int y, const RectI& rect, const Surface& sprite )
 {
+	assert( rect.left >= 0 );
+	assert( rect.right <= sprite.GetWidth() );
+	assert( rect.top >= 0 );
+	assert( rect.bottom <= sprite.GetHeight() );
+
 	for (int sy = rect.top; sy < rect.bottom; sy++)
 	{
 		for (int sx = rect.left; sx < rect.right; sx++)
@@ -338,6 +348,35 @@ void Graphics::DrawSprite( int x, int y, const RectI& rect, const Surface& sprit
 			PutPixel( x + (sx - rect.left), y + (sy - rect.top), sprite.GetPixel( sx, sy ) );
 		}
 	}
+}
+
+void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite )
+{
+	assert( clipreg.left >= 0 );
+	assert( clipreg.right <= Graphics::ScreenWidth );
+	assert( clipreg.top >= 0 );
+	assert( clipreg.bottom <= Graphics::ScreenHeight );
+
+	if (x < clipreg.left)
+	{
+		subreg.left += clipreg.left - x;
+		x = clipreg.left;
+	}
+	if (y < clipreg.top)
+	{
+		subreg.top += clipreg.top - y;
+		y = clipreg.top;
+	}
+	if (x + subreg.GetWidth() > clipreg.right)
+	{
+		subreg.right -= (x + subreg.GetWidth()) - clipreg.right;
+	}
+	if (y + subreg.GetHeight() > clipreg.bottom)
+	{
+		subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
+	}
+
+	DrawSprite( x, y, subreg, sprite );
 }
 
 

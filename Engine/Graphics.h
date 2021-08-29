@@ -60,7 +60,8 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawSprite(int x, int y, const Surface& sprite);
-	void DrawSprite( int x, int y, const RectI& rect, const Surface& sprite );
+	void DrawSprite( int x, int y, const RectI& rect, const Surface& sprite ); // Draw sprite subregion
+	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite ); // Draw sprite with clipping
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
@@ -79,4 +80,5 @@ private:
 public:
 	static constexpr int ScreenWidth = 800;
 	static constexpr int ScreenHeight = 600;
+	static const RectI GetScreenRect();
 };

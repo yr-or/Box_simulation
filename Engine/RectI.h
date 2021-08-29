@@ -15,6 +15,8 @@ public:
 	RectI GetExpanded( int offset ) const;
 	Vei2 GetCenter() const;
 	bool Contains(const Vei2& pos) const;
+	int GetWidth() const;
+	int GetHeight() const;
 public:
 	int left;
 	int right;

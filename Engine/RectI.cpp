@@ -53,3 +53,13 @@ bool RectI::Contains(const Vei2& pos) const
 {
 	return (pos.x <= right && pos.x >= left && pos.y <= bottom && pos.y >= top);
 }
+
+int RectI::GetWidth() const
+{
+	return right - left;
+}
+
+int RectI::GetHeight() const
+{
+	return bottom - top;
+}

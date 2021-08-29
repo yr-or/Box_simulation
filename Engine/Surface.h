@@ -2,6 +2,7 @@
 
 #include "Colors.h"
 #include <string>
+#include "RectI.h"
 
 class Surface
 {
@@ -19,4 +20,5 @@ public:
 	Color GetPixel(int x, int y) const;
 	int GetHeight() const;
 	int GetWidth() const;
+	const RectI& GetRect();
 };
