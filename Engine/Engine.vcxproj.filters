@@ -98,9 +98,6 @@
     <ClCompile Include="Surface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SURFACEOD.CPP">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RectI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "RectI.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -42,5 +43,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(0, 0, surf);
+	RectI subregion = RectI( 90, 180, 0, 90 );
+	gfx.DrawSprite(0, 0, subregion, surf);
 }

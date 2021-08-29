@@ -329,6 +329,17 @@ void Graphics::DrawSprite(int x, int y, const Surface& sprite)
 	}
 }
 
+void Graphics::DrawSprite( int x, int y, const RectI& rect, const Surface& sprite )
+{
+	for (int sy = rect.top; sy < rect.bottom; sy++)
+	{
+		for (int sx = rect.left; sx < rect.right; sx++)
+		{
+			PutPixel( x + (sx - rect.left), y + (sy - rect.top), sprite.GetPixel( sx, sy ) );
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
