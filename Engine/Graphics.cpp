@@ -321,7 +321,52 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::DrawSprite(int x, int y, const Surface& sprite)
+void Graphics::DrawSpriteNonChroma(int x, int y, const Surface& sprite)
+{
+	DrawSpriteNonChroma( x, y, sprite.GetRect(), sprite );
+}
+
+void Graphics::DrawSpriteNonChroma( int x, int y, const RectI& subreg, const Surface& sprite )
+{
+	DrawSpriteNonChroma( x, y, subreg, GetScreenRect(), sprite );
+}
+
+void Graphics::DrawSpriteNonChroma( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite )
+{
+	assert( clipreg.left >= 0 );
+	assert( clipreg.right <= Graphics::ScreenWidth );
+	assert( clipreg.top >= 0 );
+	assert( clipreg.bottom <= Graphics::ScreenHeight );
+
+	if (x < clipreg.left)
+	{
+		subreg.left += clipreg.left - x;
+		x = clipreg.left;
+	}
+	if (y < clipreg.top)
+	{
+		subreg.top += clipreg.top - y;
+		y = clipreg.top;
+	}
+	if (x + subreg.GetWidth() > clipreg.right)
+	{
+		subreg.right -= (x + subreg.GetWidth()) - clipreg.right;
+	}
+	if (y + subreg.GetHeight() > clipreg.bottom)
+	{
+		subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
+	}
+
+	for (int sy = subreg.top; sy < subreg.bottom; sy++)
+	{
+		for (int sx = subreg.left; sx < subreg.right; sx++)
+		{
+			PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), sprite.GetPixel( sx, sy ) );
+		}
+	}
+}
+
+void Graphics::DrawSprite( int x, int y, const Surface& sprite )
 {
 	DrawSprite( x, y, sprite.GetRect(), sprite );
 }
@@ -361,7 +406,10 @@ void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, con
 	{
 		for (int sx = subreg.left; sx < subreg.right; sx++)
 		{
-			PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), sprite.GetPixel( sx, sy ) );
+			if (sprite.GetPixel( sx, sy ) != Colors::Magenta)
+			{
+				PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), sprite.GetPixel( sx, sy ) );
+			}
 		}
 	}
 }

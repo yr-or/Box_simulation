@@ -91,6 +91,8 @@ public:
 	{
 		dword = (dword & 0xFFFFFF00u) | b;
 	}
+	bool operator==( const Color& c );
+	bool operator!=( const Color& c );
 };
 
 namespace Colors

@@ -59,9 +59,12 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
-	void DrawSprite(int x, int y, const Surface& sprite);
-	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite ); // Draw sprite subregion
-	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite ); // Draw sprite with clipping
+	void DrawSpriteNonChroma(int x, int y, const Surface& sprite);
+	void DrawSpriteNonChroma( int x, int y, const RectI& subreg, const Surface& sprite ); // Draw sprite subregion
+	void DrawSpriteNonChroma( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite ); // Draw sprite with clipping
+	void DrawSprite( int x, int y, const Surface& sprite );
+	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite );
+	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite );
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
