@@ -60,7 +60,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawSprite(int x, int y, const Surface& sprite);
-	void DrawSprite( int x, int y, const RectI& rect, const Surface& sprite ); // Draw sprite subregion
+	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite ); // Draw sprite subregion
 	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite ); // Draw sprite with clipping
 	~Graphics();
 private:

@@ -323,31 +323,12 @@ void Graphics::PutPixel( int x,int y,Color c )
 
 void Graphics::DrawSprite(int x, int y, const Surface& sprite)
 {
-	const int width = sprite.GetWidth();
-	const int height = sprite.GetHeight();
-	for (int sy = 0; sy < height; sy++)
-	{
-		for (int sx = 0; sx < width; sx++)
-		{
-			PutPixel(x + sx, y + sy, sprite.GetPixel(sx, sy));
-		}
-	}
+	DrawSprite( x, y, sprite.GetRect(), sprite );
 }
 
-void Graphics::DrawSprite( int x, int y, const RectI& rect, const Surface& sprite )
+void Graphics::DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite )
 {
-	assert( rect.left >= 0 );
-	assert( rect.right <= sprite.GetWidth() );
-	assert( rect.top >= 0 );
-	assert( rect.bottom <= sprite.GetHeight() );
-
-	for (int sy = rect.top; sy < rect.bottom; sy++)
-	{
-		for (int sx = rect.left; sx < rect.right; sx++)
-		{
-			PutPixel( x + (sx - rect.left), y + (sy - rect.top), sprite.GetPixel( sx, sy ) );
-		}
-	}
+	DrawSprite( x, y, subreg, GetScreenRect(), sprite );
 }
 
 void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite )
@@ -376,7 +357,13 @@ void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, con
 		subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
 	}
 
-	DrawSprite( x, y, subreg, sprite );
+	for (int sy = subreg.top; sy < subreg.bottom; sy++)
+	{
+		for (int sx = subreg.left; sx < subreg.right; sx++)
+		{
+			PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), sprite.GetPixel( sx, sy ) );
+		}
+	}
 }
 
 
