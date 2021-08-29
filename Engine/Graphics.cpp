@@ -376,7 +376,7 @@ void Graphics::DrawSprite( int x, int y, const RectI& subreg, const Surface& spr
 	DrawSprite( x, y, subreg, GetScreenRect(), sprite );
 }
 
-void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite )
+void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, const Color& chroma )
 {
 	assert( clipreg.left >= 0 );
 	assert( clipreg.right <= Graphics::ScreenWidth );
@@ -406,7 +406,7 @@ void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, con
 	{
 		for (int sx = subreg.left; sx < subreg.right; sx++)
 		{
-			if (sprite.GetPixel( sx, sy ) != Colors::Magenta)
+			if (sprite.GetPixel( sx, sy ) != chroma)
 			{
 				PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), sprite.GetPixel( sx, sy ) );
 			}
