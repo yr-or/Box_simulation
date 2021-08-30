@@ -2,7 +2,7 @@
 
 bool Color::operator==( const Color& c )
 {
-	return (this->GetR() == c.GetR() && this->GetG() == c.GetG() && this->GetB() == c.GetB());
+	return (dword == c.dword);
 }
 
 bool Color::operator!=( const Color& c )

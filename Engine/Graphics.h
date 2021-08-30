@@ -62,9 +62,9 @@ public:
 	void DrawSpriteNonChroma(int x, int y, const Surface& sprite);
 	void DrawSpriteNonChroma( int x, int y, const RectI& subreg, const Surface& sprite ); // Draw sprite subregion
 	void DrawSpriteNonChroma( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite ); // Draw sprite with clipping
-	void DrawSprite( int x, int y, const Surface& sprite );
-	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite );
-	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, const Color& chroma = Colors::Magenta );
+	void DrawSprite( int x, int y, const Surface& sprite, Color chroma = Colors::Magenta );
+	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite, Color chroma = Colors::Magenta );
+	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color chroma = Colors::Magenta );
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

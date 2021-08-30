@@ -27,9 +27,9 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
-{
-}
+	gfx( wnd ),
+	link( {50, 50} )
+{}
 
 void Game::Go()
 {
@@ -41,9 +41,28 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	Vec2 dir = {0.0f, 0.0f};
+	if (wnd.kbd.KeyIsPressed( VK_RIGHT ))
+	{
+		dir = Directions::RIGHT;
+	}
+	if (wnd.kbd.KeyIsPressed( VK_LEFT ))
+	{
+		dir = Directions::LEFT;
+	}
+	if (wnd.kbd.KeyIsPressed( VK_UP ))
+	{
+		dir = Directions::UP;
+	}
+	if (wnd.kbd.KeyIsPressed( VK_DOWN ))
+	{
+		dir = Directions::DOWN;
+	}
+	link.SetDirection( dir );
+	link.Update( ft.Mark() );
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite( wnd.mouse.GetPosX(), wnd.mouse.GetPosY(), { 90, 180, 90, 180 }, Graphics::GetScreenRect(), surf );
+	link.Draw( gfx );
 }

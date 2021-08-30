@@ -366,17 +366,17 @@ void Graphics::DrawSpriteNonChroma( int x, int y, RectI subreg, const RectI& cli
 	}
 }
 
-void Graphics::DrawSprite( int x, int y, const Surface& sprite )
+void Graphics::DrawSprite( int x, int y, const Surface& sprite, Color chroma )
 {
-	DrawSprite( x, y, sprite.GetRect(), sprite );
+	DrawSprite( x, y, sprite.GetRect(), sprite, chroma );
 }
 
-void Graphics::DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite )
+void Graphics::DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite, Color chroma )
 {
-	DrawSprite( x, y, subreg, GetScreenRect(), sprite );
+	DrawSprite( x, y, subreg, GetScreenRect(), sprite, chroma );
 }
 
-void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, const Color& chroma )
+void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color chroma )
 {
 	assert( clipreg.left >= 0 );
 	assert( clipreg.right <= Graphics::ScreenWidth );
