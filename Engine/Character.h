@@ -20,7 +20,7 @@ private:
 private:
 	Vec2 pos;
 	Vec2 vel = { 0.0f, 0.0f };
-	float speed = 100.0f;
+	float speed = 150.0f;
 	Surface sprite;
 	std::vector<Animation> animations;
 	Sequence curSequence = Sequence::StandingDown;

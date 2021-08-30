@@ -414,6 +414,54 @@ void Graphics::DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, con
 	}
 }
 
+void Graphics::DrawSpriteColor( int x, int y, const Surface& sprite, Color fill, Color chroma )
+{
+	DrawSpriteColor( x, y, sprite.GetRect(), sprite, fill, chroma );
+}
+
+void Graphics::DrawSpriteColor( int x, int y, const RectI& subreg, const Surface& sprite, Color fill, Color chroma )
+{
+	DrawSpriteColor( x, y, subreg, GetScreenRect(), sprite, fill, chroma );
+}
+
+void Graphics::DrawSpriteColor( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color fill, Color chroma )
+{
+	assert( clipreg.left >= 0 );
+	assert( clipreg.right <= Graphics::ScreenWidth );
+	assert( clipreg.top >= 0 );
+	assert( clipreg.bottom <= Graphics::ScreenHeight );
+
+	if (x < clipreg.left)
+	{
+		subreg.left += clipreg.left - x;
+		x = clipreg.left;
+	}
+	if (y < clipreg.top)
+	{
+		subreg.top += clipreg.top - y;
+		y = clipreg.top;
+	}
+	if (x + subreg.GetWidth() > clipreg.right)
+	{
+		subreg.right -= (x + subreg.GetWidth()) - clipreg.right;
+	}
+	if (y + subreg.GetHeight() > clipreg.bottom)
+	{
+		subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
+	}
+
+	for (int sy = subreg.top; sy < subreg.bottom; sy++)
+	{
+		for (int sx = subreg.left; sx < subreg.right; sx++)
+		{
+			if (sprite.GetPixel( sx, sy ) != chroma)
+			{
+				PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), fill );
+			}
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
