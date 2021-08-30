@@ -28,8 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	link( {50, 50} ),
-	font( "My name is Rory!", { 0, 0 } )
+	link( {50, 50} )
 {}
 
 void Game::Go()
@@ -61,12 +60,10 @@ void Game::UpdateModel()
 	}
 	link.SetDirection( dir );
 	link.Update( ft.Mark() );
-
-	font.Update( { wnd.mouse.GetPosX(), wnd.mouse.GetPosY() } );
 }
 
 void Game::ComposeFrame()
 {
 	link.Draw( gfx );
-	font.DrawText( gfx );
+	font.DrawText( "the quick brown fox!", wnd.mouse.GetPos(), gfx );
 }

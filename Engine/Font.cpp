@@ -1,29 +1,37 @@
 #include "Font.h"
+#include <assert.h>
 
-Font::Font( const std::string& str, Vei2 pos )
+Font::Font( const std::string& filename, Color chroma )
 	:
-	text(str),
-	screenPos(pos)
+	surface( filename ),
+	glyphWidth( surface.GetWidth() / nColumns ),
+	glyphHeight( surface.GetHeight() / nRows ),
+	chroma( chroma )
 {
+	assert( glyphWidth * nColumns == surface.GetWidth() );
+	assert( glyphHeight * nRows == surface.GetHeight() );
+}
+
+void Font::DrawText( const std::string& text, const Vei2& pos, Graphics& gfx ) const
+{
+	Vei2 curPos = pos;
 	for (char c : text)
 	{
-		Vei2 dimensions = Vei2( 16, 28 );
-		Vei2 topleft = Vei2( (c % 32) * 16, ((c / 32) - 1) * 28 );
-		Vei2 botright = Vei2( topleft + dimensions );
-
-		chars.emplace_back( topleft, botright );
+		if (c >= firstChar + 1 && c <= lastChar)
+		{
+			gfx.DrawSpriteColor( curPos.x, curPos.y, GetGlyphRect( c ), surface, Colors::White, chroma );
+		}
+		curPos.x += glyphWidth;
 	}
 }
 
-void Font::Update( Vei2 pos )
+RectI Font::GetGlyphRect( char c ) const
 {
-	screenPos = pos;
-}
+	assert( c >= firstChar && c <= lastChar );
 
-void Font::DrawText( Graphics& gfx )
-{
-	for (int i = 0; i < chars.size(); i++)
-	{
-		gfx.DrawSpriteColor( screenPos.x + (i * 16), screenPos.y, chars[i], glyphs, Colors::White, Colors::White );
-	}
+	const int glyphIndex = c - ' ';
+	const int yGlyph = glyphIndex / nColumns;
+	const int xGlyph = glyphIndex % nColumns;
+
+	return RectI( { xGlyph * glyphWidth, yGlyph * glyphHeight }, glyphWidth, glyphHeight );
 }

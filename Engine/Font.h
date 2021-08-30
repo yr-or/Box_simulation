@@ -2,19 +2,23 @@
 
 #include "Surface.h"
 #include "Vei2.h"
-#include <vector>
 #include "Graphics.h"
 
 class Font
 {
 private:
-	const Surface& glyphs = Surface("Fixedsys16x28.bmp");
-	std::vector<RectI> chars;
-	Vei2 screenPos;
-	std::string text;
+	Surface surface;
+	int glyphWidth;
+	int glyphHeight;
+	static constexpr int nColumns = 32;
+	static constexpr int nRows = 3;
+	Color chroma;
+	static constexpr int firstChar = ' ';
+	static constexpr int lastChar = '~';
+private:
+	RectI GetGlyphRect( char c ) const;
 public:
-	Font( const std::string& str, Vei2 pos );
-	void Update( Vei2 pos );
-	void DrawText( Graphics& gfx );
+	Font( const std::string& filename, Color chroma = Colors::White );
+	void DrawText( const std::string& text, const Vei2& pos, Graphics& gfx ) const;
 };
 

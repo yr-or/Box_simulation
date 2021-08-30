@@ -47,6 +47,6 @@ private:
 	/*  User Variables              */
 	Character link;
 	FrameTimer ft;
-	Font font;
+	Font font = "Fixedsys16x28.bmp";
 	/********************************/
 };
