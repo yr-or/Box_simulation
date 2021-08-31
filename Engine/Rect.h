@@ -15,14 +15,14 @@ public:
 		bottom( bottom_in )
 	{}
 
-	Rect( const Vei2& topLeft, const Vei2& bottomRight )
+	Rect( const _Vec2<T>& topLeft, const _Vec2<T>& bottomRight )
 		:
 		Rect( topLeft.x, bottomRight.x, topLeft.y, bottomRight.y )
 	{}
 
-	Rect( const Vei2& topLeft, T width, T height )
+	Rect( const _Vec2<T>& topLeft, T width, T height )
 		:
-		Rect( topLeft, topLeft + Vei2( width, height ) )
+		Rect( topLeft, topLeft + _Vec2<T>( width, height ) )
 	{}
 
 	bool IsOverlappingWith( const Rect& other ) const
@@ -37,9 +37,9 @@ public:
 			top >= other.top && bottom <= other.bottom;
 	}
 
-	Rect FromCenter( const Vei2& center, T halfWidth, T halfHeight )
+	Rect FromCenter( const _Vec2<T>& center, T halfWidth, T halfHeight )
 	{
-		const Vei2 half( halfWidth, halfHeight );
+		const _Vec2<T> half( halfWidth, halfHeight );
 		return Rect( center - half, center + half );
 	}
 
@@ -48,12 +48,12 @@ public:
 		return Rect( left - offset, right + offset, top - offset, bottom + offset );
 	}
 
-	Vei2 GetCenter() const
+	_Vec2<T> GetCenter() const
 	{
-		return Vei2( (left + right) / 2, (top + bottom) / 2 );
+		return _Vec2<T>( (left + right) / 2, (top + bottom) / 2 );
 	}
 
-	bool Contains( const Vei2& pos ) const
+	bool Contains( const _Vec2<T>& pos ) const
 	{
 		return (pos.x <= right && pos.x >= left && pos.y <= bottom && pos.y >= top);
 	}
