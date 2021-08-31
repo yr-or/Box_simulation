@@ -26,6 +26,7 @@
 #include "Colors.h"
 #include "Surface.h"
 #include "Rect.h"
+#include <assert.h>
 
 class Graphics
 {
@@ -60,18 +61,59 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	Color GetPixel( int x, int y ) const;
-	void DrawSpriteNonChroma(int x, int y, const Surface& sprite);
-	void DrawSpriteNonChroma( int x, int y, const RectI& subreg, const Surface& sprite ); // Draw sprite subregion
-	void DrawSpriteNonChroma( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite ); // Draw sprite with clipping
-	void DrawSprite( int x, int y, const Surface& sprite, Color chroma = Colors::Magenta );
-	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite, Color chroma = Colors::Magenta );
-	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color chroma = Colors::Magenta );
-	void DrawSpriteColor( int x, int y, const Surface& sprite, Color fill, Color chroma = Colors::Magenta );
-	void DrawSpriteColor( int x, int y, const RectI& subreg, const Surface& sprite, Color fill, Color chroma = Colors::Magenta );
-	void DrawSpriteColor( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color fill, Color chroma = Colors::Magenta );
-	void DrawSpriteGhost( int x, int y, const Surface& sprite, Color chroma = Colors::Magenta );
-	void DrawSpriteGhost( int x, int y, const RectI& subreg, const Surface& sprite, Color chroma = Colors::Magenta );
-	void DrawSpriteGhost( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color chroma = Colors::Magenta );
+
+	template <typename E>
+	void DrawSprite( int x, int y, const Surface& sprite, E effect )
+	{
+		DrawSprite( x, y, sprite.GetRect(), sprite, effect );
+	}
+
+	template <typename E>
+	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite, E effect )
+	{
+		DrawSprite( x, y, subreg, GetScreenRect(), sprite, effect );
+	}
+
+	template <typename E>
+	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, E effect )
+	{
+		assert( clipreg.left >= 0 );
+		assert( clipreg.right <= Graphics::ScreenWidth );
+		assert( clipreg.top >= 0 );
+		assert( clipreg.bottom <= Graphics::ScreenHeight );
+
+		if (x < clipreg.left)
+		{
+			subreg.left += clipreg.left - x;
+			x = clipreg.left;
+		}
+		if (y < clipreg.top)
+		{
+			subreg.top += clipreg.top - y;
+			y = clipreg.top;
+		}
+		if (x + subreg.GetWidth() > clipreg.right)
+		{
+			subreg.right -= (x + subreg.GetWidth()) - clipreg.right;
+		}
+		if (y + subreg.GetHeight() > clipreg.bottom)
+		{
+			subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
+		}
+
+		for (int sy = subreg.top; sy < subreg.bottom; sy++)
+		{
+			for (int sx = subreg.left; sx < subreg.right; sx++)
+			{
+				int xDst = x + (sx - subreg.left);
+				int yDst = y + (sy - subreg.top);
+				Color cSrc = sprite.GetPixel( sx, sy );
+
+				// Effect functor
+				effect( cSrc, xDst, yDst, *this );
+			}
+		}
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

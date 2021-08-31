@@ -1,5 +1,6 @@
 #include "Font.h"
 #include <assert.h>
+#include "SpriteEffect.h"
 
 Font::Font( const std::string& filename, Color chroma )
 	:
@@ -21,7 +22,7 @@ void Font::DrawText( const std::string& text, const Vei2& pos, Graphics& gfx ) c
 		{
 			if (c >= firstChar + 1 && c <= lastChar)
 			{
-				gfx.DrawSpriteColor( curPos.x, curPos.y, GetGlyphRect( c ), surface, Colors::White, chroma );
+				gfx.DrawSprite( curPos.x, curPos.y, GetGlyphRect( c ), surface, SpriteEffect::ColorFill{ chroma, Colors::White } );
 			}
 			curPos.x += glyphWidth;
 		}

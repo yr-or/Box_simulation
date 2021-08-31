@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "SpriteEffect.h"
 
 Animation::Animation( int x, int y, int width, int height, int count, const Surface& sprite, float holdTime, Color chroma )
 	:
@@ -33,10 +34,10 @@ void Animation::AdvanceFrame()
 
 void Animation::Draw( const Vei2& pos, Graphics& gfx ) const
 {
-	gfx.DrawSpriteGhost( pos.x, pos.y, frames[curFrame], sprite, chroma );
+	gfx.DrawSprite( pos.x, pos.y, frames[curFrame], sprite, SpriteEffect::Chroma{chroma} );
 }
 
 void Animation::Draw( const Vei2& pos, const RectI& clipreg, Graphics& gfx ) const
 {
-	gfx.DrawSprite( pos.x, pos.y, frames[curFrame], clipreg, sprite, chroma );
+	gfx.DrawSprite( pos.x, pos.y, frames[curFrame], clipreg, sprite, SpriteEffect::Chroma{ chroma } );
 }
