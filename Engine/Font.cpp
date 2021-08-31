@@ -17,11 +17,19 @@ void Font::DrawText( const std::string& text, const Vei2& pos, Graphics& gfx ) c
 	Vei2 curPos = pos;
 	for (char c : text)
 	{
-		if (c >= firstChar + 1 && c <= lastChar)
+		if (c != '\n')
 		{
-			gfx.DrawSpriteColor( curPos.x, curPos.y, GetGlyphRect( c ), surface, Colors::White, chroma );
+			if (c >= firstChar + 1 && c <= lastChar)
+			{
+				gfx.DrawSpriteColor( curPos.x, curPos.y, GetGlyphRect( c ), surface, Colors::White, chroma );
+			}
+			curPos.x += glyphWidth;
 		}
-		curPos.x += glyphWidth;
+		else
+		{
+			curPos.y += glyphHeight;
+			curPos.x = pos.x;
+		}
 	}
 }
 

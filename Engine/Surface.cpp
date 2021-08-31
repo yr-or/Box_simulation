@@ -2,6 +2,7 @@
 #include "ChiliWin.h"
 #include <assert.h>
 #include <fstream>
+#include <sstream>
 
 
 Surface::Surface(const std::string& filename)

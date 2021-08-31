@@ -91,8 +91,16 @@ public:
 	{
 		dword = (dword & 0xFFFFFF00u) | b;
 	}
-	bool operator==( const Color& c );
-	bool operator!=( const Color& c );
+	bool operator==( const Color& c ) const;
+	bool operator!=( const Color& c ) const;
+
+	static Color MixColors( const Color& c1, const Color& c2 )
+	{
+		unsigned char r = ( (c1.GetR() + c2.GetR()) / 2 );
+		unsigned char g = ( (c1.GetG() + c2.GetG()) / 2 );
+		unsigned char b = ( (c1.GetB() + c2.GetB()) / 2 );
+		return Color( r, g, b );
+	}
 };
 
 namespace Colors

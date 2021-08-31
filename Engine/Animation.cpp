@@ -33,7 +33,7 @@ void Animation::AdvanceFrame()
 
 void Animation::Draw( const Vei2& pos, Graphics& gfx ) const
 {
-	gfx.DrawSprite( pos.x, pos.y, frames[curFrame], sprite, chroma );
+	gfx.DrawSpriteGhost( pos.x, pos.y, frames[curFrame], sprite, chroma );
 }
 
 void Animation::Draw( const Vei2& pos, const RectI& clipreg, Graphics& gfx ) const

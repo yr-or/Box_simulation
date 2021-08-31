@@ -321,6 +321,15 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+Color Graphics::GetPixel( int x, int y ) const
+{
+	assert( x >= 0 );
+	assert( x < int( Graphics::ScreenWidth ) );
+	assert( y >= 0 );
+	assert( y < int( Graphics::ScreenHeight ) );
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
+}
+
 void Graphics::DrawSpriteNonChroma(int x, int y, const Surface& sprite)
 {
 	DrawSpriteNonChroma( x, y, sprite.GetRect(), sprite );
@@ -462,6 +471,58 @@ void Graphics::DrawSpriteColor( int x, int y, RectI subreg, const RectI& clipreg
 	}
 }
 
+void Graphics::DrawSpriteGhost( int x, int y, const Surface& sprite, Color chroma )
+{
+	DrawSpriteGhost( x, y, sprite.GetRect(), sprite, chroma );
+}
+
+void Graphics::DrawSpriteGhost( int x, int y, const RectI& subreg, const Surface& sprite, Color chroma )
+{
+	DrawSpriteGhost( x, y, subreg, GetScreenRect(), sprite, chroma );
+}
+
+void Graphics::DrawSpriteGhost( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, Color chroma )
+{
+	assert( clipreg.left >= 0 );
+	assert( clipreg.right <= Graphics::ScreenWidth );
+	assert( clipreg.top >= 0 );
+	assert( clipreg.bottom <= Graphics::ScreenHeight );
+
+	if (x < clipreg.left)
+	{
+		subreg.left += clipreg.left - x;
+		x = clipreg.left;
+	}
+	if (y < clipreg.top)
+	{
+		subreg.top += clipreg.top - y;
+		y = clipreg.top;
+	}
+	if (x + subreg.GetWidth() > clipreg.right)
+	{
+		subreg.right -= (x + subreg.GetWidth()) - clipreg.right;
+	}
+	if (y + subreg.GetHeight() > clipreg.bottom)
+	{
+		subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
+	}
+
+	for (int sy = subreg.top; sy < subreg.bottom; sy++)
+	{
+		for (int sx = subreg.left; sx < subreg.right; sx++)
+		{
+			if (sprite.GetPixel( sx, sy ) != chroma)
+			{
+				// Mix the sprite and background pixels
+				const Color spritePixel = sprite.GetPixel( sx, sy );
+				const Color bgPixel = GetPixel( x + (sx - subreg.left), y + (sy - subreg.top) );
+				const Color mixedColor = Color::MixColors( spritePixel, bgPixel );
+
+				PutPixel( x + (sx - subreg.left), y + (sy - subreg.top), mixedColor );
+			}
+		}
+	}
+}
 
 //////////////////////////////////////////////////
 //           Graphics Exception

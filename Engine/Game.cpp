@@ -64,6 +64,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	font.DrawText( "The quick brown fox!\njumped over", wnd.mouse.GetPos(), gfx );
 	link.Draw( gfx );
-	font.DrawText( "the quick brown fox!", wnd.mouse.GetPos(), gfx );
 }
