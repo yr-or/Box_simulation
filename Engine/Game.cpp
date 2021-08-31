@@ -20,7 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
-#include "RectI.h"
+#include "Rect.h"
 #include "ChiliWin.h"
 #include <sstream>
 
