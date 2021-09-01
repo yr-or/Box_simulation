@@ -14,7 +14,7 @@ public:
 	{}
 
 	template <typename S>
-	_Vec2( const _Vec2<S>& src)
+	explicit _Vec2( const _Vec2<S>& src)
 		:
 		x( (T)src.x ),
 		y( (T)src.y )
