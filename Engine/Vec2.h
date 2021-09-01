@@ -13,7 +13,8 @@ public:
 		y( y_in )
 	{}
 
-	_Vec2( const _Vec2<float>& src)
+	template <typename S>
+	_Vec2( const _Vec2<S>& src)
 		:
 		x( (T)src.x ),
 		y( (T)src.y )
