@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	link( {50, 50} )
+	box( 150, 150, 100, 360 )
 {}
 
 void Game::Go()
@@ -41,29 +41,10 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	Vec2 dir = {0.0f, 0.0f};
-	if (wnd.kbd.KeyIsPressed( VK_RIGHT ))
-	{
-		dir = Directions::RIGHT;
-	}
-	if (wnd.kbd.KeyIsPressed( VK_LEFT ))
-	{
-		dir = Directions::LEFT;
-	}
-	if (wnd.kbd.KeyIsPressed( VK_UP ))
-	{
-		dir = Directions::UP;
-	}
-	if (wnd.kbd.KeyIsPressed( VK_DOWN ))
-	{
-		dir = Directions::DOWN;
-	}
-	link.SetDirection( dir );
-	link.Update( ft.Mark() );
+	
 }
 
 void Game::ComposeFrame()
 {
-	font.DrawText( "The quick brown fox!\njumped over", wnd.mouse.GetPos(), gfx );
-	link.Draw( gfx );
+	box.Draw( gfx );
 }

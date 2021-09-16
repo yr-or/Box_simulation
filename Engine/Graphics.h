@@ -61,59 +61,9 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	Color GetPixel( int x, int y ) const;
-
-	template <typename E>
-	void DrawSprite( int x, int y, const Surface& sprite, E effect )
-	{
-		DrawSprite( x, y, sprite.GetRect(), sprite, effect );
-	}
-
-	template <typename E>
-	void DrawSprite( int x, int y, const RectI& subreg, const Surface& sprite, E effect )
-	{
-		DrawSprite( x, y, subreg, GetScreenRect(), sprite, effect );
-	}
-
-	template <typename E>
-	void DrawSprite( int x, int y, RectI subreg, const RectI& clipreg, const Surface& sprite, E effect )
-	{
-		assert( clipreg.left >= 0 );
-		assert( clipreg.right <= Graphics::ScreenWidth );
-		assert( clipreg.top >= 0 );
-		assert( clipreg.bottom <= Graphics::ScreenHeight );
-
-		if (x < clipreg.left)
-		{
-			subreg.left += clipreg.left - x;
-			x = clipreg.left;
-		}
-		if (y < clipreg.top)
-		{
-			subreg.top += clipreg.top - y;
-			y = clipreg.top;
-		}
-		if (x + subreg.GetWidth() > clipreg.right)
-		{
-			subreg.right -= (x + subreg.GetWidth()) - clipreg.right;
-		}
-		if (y + subreg.GetHeight() > clipreg.bottom)
-		{
-			subreg.bottom -= (y + subreg.GetHeight()) - clipreg.bottom;
-		}
-
-		for (int sy = subreg.top; sy < subreg.bottom; sy++)
-		{
-			for (int sx = subreg.left; sx < subreg.right; sx++)
-			{
-				int xDst = x + (sx - subreg.left);
-				int yDst = y + (sy - subreg.top);
-				Color cSrc = sprite.GetPixel( sx, sy );
-
-				// Effect functor
-				effect( cSrc, xDst, yDst, *this );
-			}
-		}
-	}
+	void DrawRect( int x, int y, Color c );
+	void DrawBox( Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c );
+	
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

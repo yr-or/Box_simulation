@@ -330,7 +330,24 @@ Color Graphics::GetPixel( int x, int y ) const
 	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
+void Graphics::DrawRect( int x, int y, Color c )
+{
+	for (int i = x; i < x + 10; i++)
+	{
+		for (int j = y; j < y + 10; j++)
+		{
+			PutPixel( i, j, c );
+		}
+	}
+}
 
+void Graphics::DrawBox( Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
+{
+	DrawRect( topleft.x, topleft.y, c );
+	DrawRect( topright.x, topright.y, c );
+	DrawRect( botleft.x, botleft.y, c );
+	DrawRect( botright.x, botright.y, c );
+}
 
 //////////////////////////////////////////////////
 //           Graphics Exception

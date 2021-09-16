@@ -23,9 +23,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Character.h"
 #include "FrameTimer.h"
-#include "Font.h"
+#include "Box.h"
 
 class Game
 {
@@ -45,8 +44,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Character link;
 	FrameTimer ft;
-	Font font = "Fixedsys16x28.bmp";
+	Box box;
 	/********************************/
 };
