@@ -321,6 +321,11 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::PutPixel( Vec2 v, Color c )
+{
+	PutPixel( v.x, v.y, c );
+}
+
 Color Graphics::GetPixel( int x, int y ) const
 {
 	assert( x >= 0 );
@@ -345,10 +350,15 @@ void Graphics::DrawBox( Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright
 {
 	Vec2 top = topright - topleft;
 	float width = top.GetLength();
-	Vec2 unit_vec = top.GetUnitVector();
-	for (Vec2 i = topleft; i.GetLength() < topright.GetLength(); i += unit_vec)
+	Vec2 unit_vec_top = top.GetUnitVector();
+	Vec2 left = botleft - topleft;
+	Vec2 unit_vec_left = left.GetUnitVector();
+	for (Vec2 j = {0,0}; (Vei2)j != (Vei2)left; j += unit_vec_left)
 	{
-		PutPixel( i.x, i.y, c );
+		for (Vec2 i = topleft; (Vei2)i != (Vei2)topright; i += unit_vec_top)
+		{
+			PutPixel( i+j, c );
+		}
 	}
 }
 

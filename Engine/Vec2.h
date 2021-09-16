@@ -49,6 +49,14 @@ public:
 	{
 		return *this = *this - rhs;
 	}
+	bool operator==( const _Vec2& rhs ) const
+	{
+		return (x == rhs.x && y == rhs.y);
+	}
+	bool operator!=( const _Vec2& rhs ) const
+	{
+		return !(*this == rhs);
+	}
 
 	T GetLength() const
 	{
