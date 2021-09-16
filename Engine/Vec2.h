@@ -74,6 +74,10 @@ public:
 		}
 		return *this;
 	}
+	_Vec2 GetUnitVector() const
+	{
+		return GetNormalized();
+	}
 
 public:
 	T x;
