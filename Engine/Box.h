@@ -19,6 +19,6 @@ public:
 	Box( int x, int y, int width, float angle );
 	void Draw( Graphics& gfx );
 	void Rotate( int angle );
-
+	Matrix GetColumnVector( Vec2 v );
 };
 

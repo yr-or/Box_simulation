@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	box( 150, 150, 100, 30 )
+	box( 300, 300, 100, 30 )
 {}
 
 void Game::Go()
@@ -41,7 +41,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	
+
 }
 
 void Game::ComposeFrame()

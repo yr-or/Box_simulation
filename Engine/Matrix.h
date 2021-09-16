@@ -8,7 +8,7 @@ private:
 		Column,
 		Square
 	};
-private:
+public:
 	float x0y0;
 	float x1y0;
 	float x0y1;
@@ -17,6 +17,6 @@ private:
 public:
 	Matrix( float x0y0, float x0y1 );
 	Matrix( float x0y0, float x1y0, float x0y1, float x1y1 );
-	Matrix( int angle );
+	static Matrix& GetRotationMatrix( float angle_deg );
 	Matrix& operator*( Matrix& rhs );
 };

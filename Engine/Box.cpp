@@ -39,5 +39,10 @@ void Box::Draw( Graphics& gfx )
 
 void Box::Rotate( int angle )
 {
-	;
+	
+}
+
+Matrix Box::GetColumnVector( Vec2 v )
+{
+	return Matrix(v.x, v.y);
 }
