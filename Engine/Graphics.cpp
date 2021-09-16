@@ -343,7 +343,7 @@ void Graphics::DrawRect( int x, int y, Color c )
 
 void Graphics::DrawBox( Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
 {
-	Vec2 top = topleft + topright;
+	Vec2 top = topright - topleft;
 	float width = top.GetLength();
 	Vec2 unit_vec = top.GetUnitVector();
 	for (Vec2 i = topleft; i.GetLength() < topright.GetLength(); i += unit_vec)
