@@ -356,9 +356,10 @@ void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, V
 	{
 		for (int i = x_start; i < width + y_start; i++)
 		{
-			Vec2 point = Vec2( i, j ) - center;
-			Vec2 point_rotated = point.Rotate( angle_deg );
-			PutPixel( point_rotated + center, c );
+			Vec2 point = Vec2( i, j ) - center;				// Point relative to screen origin
+			Vec2 point_rotated = point.Rotate( angle_deg ); // Point rotated about square center
+			Vec2 new_point = point_rotated + center;		// Convert back to point relative to screen origin
+			PutPixel( new_point, c );		
 		}
 	}
 }
