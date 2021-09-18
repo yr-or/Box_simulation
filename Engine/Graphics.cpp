@@ -335,8 +335,10 @@ Color Graphics::GetPixel( int x, int y ) const
 	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
-void Graphics::DrawRect( int x, int y, Color c )
+void Graphics::DrawRect( Vec2 v, Color c )
 {
+	int x = v.x;
+	int y = v.y;
 	for (int i = x; i < x + 10; i++)
 	{
 		for (int j = y; j < y + 10; j++)
@@ -346,20 +348,29 @@ void Graphics::DrawRect( int x, int y, Color c )
 	}
 }
 
-void Graphics::DrawBox( Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
+void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
 {
 	Vec2 top = topright - topleft;
-	float width = top.GetLength();
 	Vec2 unit_vec_top = top.GetUnitVector();
 	Vec2 left = botleft - topleft;
 	Vec2 unit_vec_left = left.GetUnitVector();
-	for (Vec2 j = {0,0}; (Vei2)j != (Vei2)left; j += unit_vec_left)
+	Vec2 topleft_screen = center + topleft;
+	Vec2 topright_screen = center + topright;
+	for (Vec2 j = {0.0f,0.0f}; (Vei2)j != (Vei2)left; j += unit_vec_left)
 	{
-		for (Vec2 i = topleft; (Vei2)i != (Vei2)topright; i += unit_vec_top)
+		for (Vec2 i = topleft_screen; (Vei2)i != (Vei2)topright_screen; i += unit_vec_top)
 		{
 			PutPixel( i+j, c );
 		}
 	}
+}
+
+void Graphics::DrawCorners( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
+{
+	DrawRect( center + topleft, c );
+	DrawRect( center + topright, c );
+	DrawRect( center + botleft, c );
+	DrawRect( center + botright, c );
 }
 
 //////////////////////////////////////////////////

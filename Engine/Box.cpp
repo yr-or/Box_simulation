@@ -3,46 +3,32 @@
 
 Box::Box( int x, int y, int width )
 	:
-	topleft( x, y ),
-	topright( x + width, y ),
-	botleft( x, y + width ),
-	botright( x + width, y + width )
+	center( x, y ),
+	width( width ),
+	topleft( -(width / 2), -(width / 2) ),
+	topright( (width / 2), -(width / 2) ),
+	botleft( -(width / 2), (width / 2) ),
+	botright( (width / 2), (width / 2) )
 {}
 
-Box::Box( int x, int y, Vec2 top )
+
+Box::Box( int x, int y, int width, float angle_deg )
 	:
-	topleft( x, y ),
-	topright( topleft + top )
+	Box( x, y, width )
 {
-	Vec2 left = Vec2( top.y, -top.x );
-	botleft = topleft + left;
-	botright = botleft + top;
-}
-
-Box::Box( int x, int y, int width, float angle )
-{
-	auto pi = std::acos( -1 );
-	float angle_rad = (angle / 180) * pi;
-	Vec2 top = Vec2( (width * std::cos( angle_rad )), (width * std::sin( angle_rad )) );
-
-	topleft = Vec2( x, y );
-	topright = topleft + top;
-	Vec2 left = Vec2( top.y, -top.x );
-	botleft = topleft + left;
-	botright = botleft + top;
+	Rotate( angle_deg );
 }
 
 void Box::Draw( Graphics& gfx )
 {
-	gfx.DrawBox( topleft, topright, botleft, botright, color );
+	gfx.DrawBox( center, width, topleft, topright, botleft, botright, color );
 }
 
-void Box::Rotate( int angle )
+void Box::Rotate( int angle_deg )
 {
-	
+	topleft.Rotate( angle_deg );
+	topright.Rotate( angle_deg );
+	botleft.Rotate( angle_deg );
+	botright.Rotate( angle_deg );
 }
 
-Matrix Box::GetColumnVector( Vec2 v )
-{
-	return Matrix(v.x, v.y);
-}
