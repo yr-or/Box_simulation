@@ -6,10 +6,7 @@ Box::Box( int x, int y, int width, float angle_deg )
 	center( x, y ),
 	width( width ),
 	angle_deg(angle_deg),
-	topleft( -(width / 2), -(width / 2) ),
-	topright( (width / 2), -(width / 2) ),
-	botleft( -(width / 2), (width / 2) ),
-	botright( (width / 2), (width / 2) )
+	topleft( -(width / 2), -(width / 2) )
 {}
 
 void Box::Draw( Graphics& gfx )

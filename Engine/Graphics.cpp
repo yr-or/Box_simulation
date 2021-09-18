@@ -363,18 +363,18 @@ void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Color c, float a
 {
 	int x_start = (center + topleft).x;
 	int y_start = (center + topleft).y;
-	for (int j = y_start; j < width + x_start; j++)
+	for (int j = y_start; j < width + y_start; j++)
 	{
-		for (int i = x_start; i < width + y_start; i++)
+		for (int i = x_start; i < width + x_start; i++)
 		{
 			Vec2 point = Vec2( i, j ) - center;				// Point relative to screen origin
 			Vec2 point_rotated = point.Rotate( angle_deg ); // Point rotated about square center
 			Vec2 new_point = point_rotated + center;		// Convert back to point relative to screen origin
 			PutPixel( new_point, c );
 
-			if (j > y_start && j < width + x_start)
+			if (j > y_start && j < width + y_start)
 			{
-				if (i > x_start && i < width + y_start)
+				if (i > x_start && i < width + x_start)
 				{
 					FillSurround( new_point, c );
 				}

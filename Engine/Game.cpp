@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	box( 300, 300, 100 )
+	box( 300, 200, 200 )
 {}
 
 void Game::Go()
