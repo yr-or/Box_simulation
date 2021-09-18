@@ -348,7 +348,18 @@ void Graphics::DrawRect( Vec2 v, Color c )
 	}
 }
 
-void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c, float angle_deg)
+void Graphics::FillSurround( Vec2 v, Color c )
+{
+	for (int j = v.y - 1; j < v.y + 1; j++)
+	{
+		for (int i = v.x - 1; i < v.x + 1; i++)
+		{
+			PutPixel( i, j, c );
+		}
+	}
+}
+
+void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg)
 {
 	int x_start = (center + topleft).x;
 	int y_start = (center + topleft).y;
@@ -359,18 +370,19 @@ void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, V
 			Vec2 point = Vec2( i, j ) - center;				// Point relative to screen origin
 			Vec2 point_rotated = point.Rotate( angle_deg ); // Point rotated about square center
 			Vec2 new_point = point_rotated + center;		// Convert back to point relative to screen origin
-			PutPixel( new_point, c );		
+			PutPixel( new_point, c );
+
+			if (j > y_start && j < width + x_start)
+			{
+				if (i > x_start && i < width + y_start)
+				{
+					FillSurround( new_point, c );
+				}
+			}
 		}
 	}
 }
 
-void Graphics::DrawCorners( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
-{
-	DrawRect( center + topleft, c );
-	DrawRect( center + topright, c );
-	DrawRect( center + botleft, c );
-	DrawRect( center + botright, c );
-}
 
 //////////////////////////////////////////////////
 //           Graphics Exception

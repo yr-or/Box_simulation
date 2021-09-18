@@ -14,7 +14,7 @@ Box::Box( int x, int y, int width, float angle_deg )
 
 void Box::Draw( Graphics& gfx )
 {
-	gfx.DrawBox( center, width, topleft, topright, botleft, botright, color, angle_deg );
+	gfx.DrawBox( center, width, topleft, color, angle_deg );
 }
 
 void Box::Rotate( float angle )

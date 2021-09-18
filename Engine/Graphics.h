@@ -63,8 +63,8 @@ public:
 	void Graphics::PutPixel( Vec2 v, Color c );
 	Color GetPixel( int x, int y ) const;
 	void DrawRect( Vec2 v, Color c );
-	void DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c, float angle_deg );
-	void DrawCorners( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c );
+	void DrawBox( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg );
+	void FillSurround( Vec2 v, Color c );
 	
 	~Graphics();
 private:
