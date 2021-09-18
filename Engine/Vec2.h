@@ -91,14 +91,13 @@ public:
 		return GetNormalized();
 	}
 
-	void Rotate( float angle_deg )
+	_Vec2 Rotate( float angle_deg )
 	{
 		auto pi = std::acos( -1 );
 		float angle_rad = (angle_deg / 180) * pi;
 		T x_tmp = x * (std::cos( angle_rad )) - y * (std::sin( angle_rad ));
 		T y_tmp = x * (std::sin( angle_rad )) + y * (std::cos( angle_rad ));
-		x = x_tmp;
-		y = y_tmp;
+		return { x_tmp, y_tmp };
 	}
 
 public:

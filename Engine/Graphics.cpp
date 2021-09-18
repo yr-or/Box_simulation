@@ -323,7 +323,7 @@ void Graphics::PutPixel( int x,int y,Color c )
 
 void Graphics::PutPixel( Vec2 v, Color c )
 {
-	PutPixel( v.x, v.y, c );
+	PutPixel( std::round(v.x), std::round(v.y), c );
 }
 
 Color Graphics::GetPixel( int x, int y ) const
@@ -348,19 +348,17 @@ void Graphics::DrawRect( Vec2 v, Color c )
 	}
 }
 
-void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c )
+void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Vec2 topright, Vec2 botleft, Vec2 botright, Color c, float angle_deg)
 {
-	Vec2 top = topright - topleft;
-	Vec2 unit_vec_top = top.GetUnitVector();
-	Vec2 left = botleft - topleft;
-	Vec2 unit_vec_left = left.GetUnitVector();
-	Vec2 topleft_screen = center + topleft;
-	Vec2 topright_screen = center + topright;
-	for (Vec2 j = {0.0f,0.0f}; (Vei2)j != (Vei2)left; j += unit_vec_left)
+	int x_start = (center + topleft).x;
+	int y_start = (center + topleft).y;
+	for (int j = y_start; j < width + x_start; j++)
 	{
-		for (Vec2 i = topleft_screen; (Vei2)i != (Vei2)topright_screen; i += unit_vec_top)
+		for (int i = x_start; i < width + y_start; i++)
 		{
-			PutPixel( i+j, c );
+			Vec2 point = Vec2( i, j ) - center;
+			Vec2 point_rotated = point.Rotate( angle_deg );
+			PutPixel( point_rotated + center, c );
 		}
 	}
 }
