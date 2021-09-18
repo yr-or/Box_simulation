@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <string>
 #include <array>
+#include <sstream>
 
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
@@ -356,6 +357,21 @@ void Graphics::FillSurround( Vec2 v, Color c )
 		{
 			PutPixel( i, j, c );
 		}
+	}
+}
+
+bool Graphics::IsWithinScreen( const Vec2& v )
+{
+	int x = std::round( v.x );
+	int y = std::round( v.y );
+
+	if ( (x < ScreenWidth-1 && x > 1) && (y < ScreenHeight+1 && y > 1) )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

@@ -91,7 +91,7 @@ public:
 		return GetNormalized();
 	}
 
-	_Vec2 Rotate( float angle_deg )
+	_Vec2 Rotate( float angle_deg ) const
 	{
 		auto pi = std::acos( -1 );
 		float angle_rad = (angle_deg / 180) * pi;

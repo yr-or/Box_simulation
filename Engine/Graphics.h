@@ -65,6 +65,7 @@ public:
 	void DrawRect( Vec2 v, Color c );
 	void DrawBox( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg );
 	void FillSurround( Vec2 v, Color c );
+	static bool IsWithinScreen( const Vec2& v );
 	
 	~Graphics();
 private:

@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	box( 300, 200, 200 )
+	box( 300, 200, 100 )
 {}
 
 void Game::Go()
@@ -41,7 +41,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	box.Rotate( 1 );
+	box.Update();
 }
 
 void Game::ComposeFrame()
