@@ -29,38 +29,52 @@ Vec2 Box::GetBoxVec( Vec2 v )
 }
 
 
-void Box::DoCollisions()
+bool Box::DoCollisions()
 {
+	/*
+		If box is touching wall
+		Change direction
+	*/
+
+
 	Vec2 topleft_screen = GetScreenVec( topleft.Rotate( angle_deg ) );
-	if (!Graphics::IsWithinScreen( topleft_screen ))
-	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-	}
 	Vec2 topright_screen = GetScreenVec( topright.Rotate( angle_deg ) );
-	if (!Graphics::IsWithinScreen( topright_screen ))
-	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-	}
 	Vec2 botleft_screen = GetScreenVec( botleft.Rotate( angle_deg ) );
-	if (!Graphics::IsWithinScreen( botleft_screen ))
-	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-	}
 	Vec2 botright_screen = GetScreenVec( botright.Rotate( angle_deg ) );
-	if (!Graphics::IsWithinScreen( botright_screen ))
+	if (Graphics::IsOutsideScreen( topleft_screen ))
 	{
 		vel.x = -vel.x;
 		angle_vel = -angle_vel;
+		return true;
+	}
+	else if (Graphics::IsOutsideScreen( topright_screen ))
+	{
+		vel.x = -vel.x;
+		angle_vel = -angle_vel;
+		return true;
+	}
+	else if (Graphics::IsOutsideScreen( botleft_screen ))
+	{
+		vel.x = -vel.x;
+		angle_vel = -angle_vel;
+		return true;
+	}
+	else if (Graphics::IsOutsideScreen( botright_screen ))
+	{
+		vel.x = -vel.x;
+		angle_vel = -angle_vel;
+		return true;
 	}
 
 }
 
 void Box::Update()
 {
-	DoCollisions();
+	center_pos += vel;
+	if (DoCollisions())
+	{
+		center_pos += vel;
+	}
 
 	if (angle_deg >= 360)
 	{
@@ -69,9 +83,6 @@ void Box::Update()
 	else {
 		angle_deg += angle_vel;
 	}
-
-	center_pos += vel;
-	
 }
 
 

@@ -360,12 +360,12 @@ void Graphics::FillSurround( Vec2 v, Color c )
 	}
 }
 
-bool Graphics::IsWithinScreen( const Vec2& v )
+bool Graphics::IsOutsideScreen( const Vec2& v )
 {
 	int x = std::round( v.x );
 	int y = std::round( v.y );
 
-	if ( (x < ScreenWidth-1 && x > 1) && (y < ScreenHeight+1 && y > 1) )
+	if (v.x < 0 || v.x >= 800)
 	{
 		return true;
 	}
