@@ -365,7 +365,11 @@ bool Graphics::IsOutsideScreen( const Vec2& v )
 	int x = std::round( v.x );
 	int y = std::round( v.y );
 
-	if (v.x < 0 || v.x >= 800)
+	if (x < 0 || x >= 800)
+	{
+		return true;
+	}
+	else if (y < 0 || y >= 600)
 	{
 		return true;
 	}
@@ -375,7 +379,7 @@ bool Graphics::IsOutsideScreen( const Vec2& v )
 	}
 }
 
-void Graphics::DrawBox( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg)
+void Graphics::DrawSquare( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg)
 {
 	int x_start = (center + topleft).x;
 	int y_start = (center + topleft).y;

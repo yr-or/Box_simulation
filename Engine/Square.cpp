@@ -1,7 +1,7 @@
-#include "Box.h"
+#include "Square.h"
 
 
-Box::Box( int x, int y, int width, float angle_deg )
+Square::Square( int x, int y, int width, float angle_deg )
 	:
 	center_pos( x, y ),
 	width( width ),
@@ -12,27 +12,27 @@ Box::Box( int x, int y, int width, float angle_deg )
 	botright( (width / 2), (width / 2) )
 {}
 
-void Box::Draw( Graphics& gfx ) const
+void Square::Draw( Graphics& gfx ) const
 {
-	gfx.DrawBox( center_pos, width, topleft, color, angle_deg );
+	gfx.DrawSquare( center_pos, width, topleft, color, angle_deg );
 }
 
-Vec2 Box::GetScreenVec( Vec2 v )
+Vec2 Square::GetScreenVec( Vec2 v )
 {
 	Vec2 newt = (v + center_pos);
 	return newt;
 }
 
-Vec2 Box::GetBoxVec( Vec2 v )
+Vec2 Square::GetSquareVec( Vec2 v )
 {
 	return v + center_pos;
 }
 
 
-bool Box::DoCollisions()
+bool Square::DoCollisions()
 {
 	/*
-		If box is touching wall
+		If Square is touching wall
 		Change direction
 	*/
 
@@ -65,10 +65,10 @@ bool Box::DoCollisions()
 		angle_vel = -angle_vel;
 		return true;
 	}
-
+	return false;
 }
 
-void Box::Update()
+void Square::Update()
 {
 	center_pos += vel;
 	if (DoCollisions())

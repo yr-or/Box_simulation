@@ -63,7 +63,7 @@ public:
 	void Graphics::PutPixel( Vec2 v, Color c );
 	Color GetPixel( int x, int y ) const;
 	void DrawRect( Vec2 v, Color c );
-	void DrawBox( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg );
+	void DrawSquare( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg );
 	void FillSurround( Vec2 v, Color c );
 	static bool IsOutsideScreen( const Vec2& v );
 	

@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	box( 300, 200, 100 )
+	square( 300, 200, 100 )
 {}
 
 void Game::Go()
@@ -41,11 +41,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	box.Update();
+	square.Update();
 }
 
 void Game::ComposeFrame()
 {
 	gfx.PutPixel( 0, 0, Colors::Green );
-	box.Draw( gfx );
+	square.Draw( gfx );
 }
