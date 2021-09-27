@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HitBox.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HitBox.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
