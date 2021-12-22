@@ -36,36 +36,40 @@ bool Square::DoCollisions()
 		Change direction
 	*/
 
-
+	bool collisionTop = false;
+	bool collisionLeft = false;
+	bool collisionBot = false;
+	bool collisionRight = false;
 	Vec2 topleft_screen = GetScreenVec( topleft.Rotate( angle_deg ) );
 	Vec2 topright_screen = GetScreenVec( topright.Rotate( angle_deg ) );
 	Vec2 botleft_screen = GetScreenVec( botleft.Rotate( angle_deg ) );
 	Vec2 botright_screen = GetScreenVec( botright.Rotate( angle_deg ) );
-	if (Graphics::IsOutsideScreen( topleft_screen ))
+	Vec2 corners[] = { topleft_screen, topright_screen, botleft_screen, botright_screen };
+	
+	for (Vec2 corner : corners)
 	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-		return true;
+		if (!collisionTop && Graphics::IsTouchingTop(corner))
+		{
+			vel.y = -vel.y;
+			collisionTop = true;
+		}
+		if (!collisionLeft && Graphics::IsTouchingLeft( corner ))
+		{
+			vel.x = -vel.x;
+			collisionLeft = true;
+		}
+		if (!collisionBot && Graphics::IsTouchingBot( corner ))
+		{
+			vel.y = -vel.y;
+			collisionBot = true;
+		}
+		if (!collisionRight && Graphics::IsTouchingRight( corner ))
+		{
+			vel.x = -vel.x;
+			collisionRight = true;
+		}
 	}
-	else if (Graphics::IsOutsideScreen( topright_screen ))
-	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-		return true;
-	}
-	else if (Graphics::IsOutsideScreen( botleft_screen ))
-	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-		return true;
-	}
-	else if (Graphics::IsOutsideScreen( botright_screen ))
-	{
-		vel.x = -vel.x;
-		angle_vel = -angle_vel;
-		return true;
-	}
-	return false;
+	return collisionTop || collisionLeft || collisionBot || collisionRight;
 }
 
 void Square::Update()
@@ -78,7 +82,7 @@ void Square::Update()
 
 	if (angle_deg >= 360)
 	{
-		angle_deg = (360 - angle_deg) + angle_vel;
+		angle_deg = (angle_deg - 360) + angle_vel;
 	}
 	else {
 		angle_deg += angle_vel;

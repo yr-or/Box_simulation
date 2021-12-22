@@ -46,6 +46,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.PutPixel( 0, 0, Colors::Green );
 	square.Draw( gfx );
 }

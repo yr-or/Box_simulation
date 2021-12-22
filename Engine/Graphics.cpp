@@ -379,6 +379,42 @@ bool Graphics::IsOutsideScreen( const Vec2& v )
 	}
 }
 
+bool Graphics::IsTouchingTop( const Vec2& v )
+{
+	if (v.y <= 0.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Graphics::IsTouchingLeft( const Vec2& v )
+{
+	if (v.x <= 0.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Graphics::IsTouchingBot( const Vec2& v )
+{
+	if (v.y >= ScreenHeight)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Graphics::IsTouchingRight( const Vec2& v )
+{
+	if (v.x >= 800.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
 void Graphics::DrawSquare( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg)
 {
 	int x_start = (center + topleft).x;

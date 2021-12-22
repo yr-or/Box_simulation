@@ -66,6 +66,10 @@ public:
 	void DrawSquare( Vec2 center, float width, Vec2 topleft, Color c, float angle_deg );
 	void FillSurround( Vec2 v, Color c );
 	static bool IsOutsideScreen( const Vec2& v );
+	static bool IsTouchingTop( const Vec2& v );
+	static bool IsTouchingLeft( const Vec2& v );
+	static bool IsTouchingBot( const Vec2& v );
+	static bool IsTouchingRight( const Vec2& v );
 	
 	~Graphics();
 private:
