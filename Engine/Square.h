@@ -28,7 +28,7 @@ public:
 	void Update();
 	void testRotation( const Vec2& force, const Vec2& point, const float time );
 	void testLinearMotion(const Vec2& force, const float time);
-	void applyForce( const Vec2& force, const Vec2& point, const float time );
+	void applyForce( const Vec2& force, const Vec2& point_screen, const float time );
 	void Reset();
 };
 

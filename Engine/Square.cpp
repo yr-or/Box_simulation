@@ -47,28 +47,41 @@ bool Square::DoCollisions()
 	
 	for (Vec2 corner : corners)
 	{
-		if (!collisionTop && Graphics::IsTouchingTop(corner))
+		if (!collisionTop && Graphics::IsTouchingTop( corner ))
 		{
-			vel.y = -vel.y;
-			angle_vel = -angle_vel;
+			// Velocities become forces at moment of contact as instant deceleration for 1 frame
+			Vec2 force = vel * mass;
+			vel = { 0.0f, 0.0f };
+			angle_vel = 0.0f;
+			Vec2 bounceForce = Vec2( force.x, -force.y );
+			applyForce( bounceForce, corner, 1 );
 			collisionTop = true;
 		}
 		if (!collisionLeft && Graphics::IsTouchingLeft( corner ))
 		{
-			vel.x = -vel.x;
-			angle_vel = -angle_vel;
+			Vec2 force = vel * mass;
+			vel = { 0.0f, 0.0f };
+			angle_vel = 0.0f;
+			Vec2 bounceForce = Vec2( -force.x, force.y );
+			applyForce( bounceForce, corner, 1 );
 			collisionLeft = true;
 		}
 		if (!collisionBot && Graphics::IsTouchingBot( corner ))
 		{
-			vel.y = -vel.y;
-			angle_vel = -angle_vel;
+			Vec2 force = vel * mass;
+			vel = { 0.0f, 0.0f };
+			angle_vel = 0.0f;
+			Vec2 bounceForce = Vec2( force.x, -force.y );
+			applyForce( bounceForce, corner, 1 );
 			collisionBot = true;
 		}
 		if (!collisionRight && Graphics::IsTouchingRight( corner ))
 		{
-			vel.x = -vel.x;
-			angle_vel = -angle_vel;
+			Vec2 force = vel * mass;
+			vel = { 0.0f, 0.0f };
+			angle_vel = 0.0f;
+			Vec2 bounceForce = Vec2( -force.x, force.y );
+			applyForce( bounceForce, corner, 1 );
 			collisionRight = true;
 		}
 	}
@@ -92,11 +105,6 @@ void Square::Update()
 	}
 }
 
-void Square::testRotation( const Vec2& force, const Vec2& point, const float time )
-{
-	Vec2 squarePoint = ScreenToSquare( point );
-	applyForce( force, squarePoint, time );
-}
 
 void Square::testLinearMotion( const Vec2& force, const float time )
 {
@@ -104,17 +112,18 @@ void Square::testLinearMotion( const Vec2& force, const float time )
 	vel = vel + accel * time;
 }
 
-void Square::applyForce( const Vec2& force, const Vec2& point, const float time )
+void Square::applyForce( const Vec2& force, const Vec2& point_screen, const float time )
 {
 	// point = point on square that force is applied
-	
+	Vec2 point_square = ScreenToSquare( point_screen );
+
 	// Calculate velocity
 	Vec2 accel = force / mass;
 	vel = vel + accel * time;
 
 	// Calculate angular velocity
 	auto Pi = std::acos( -1 );
-	float Torque = point.CrossProd( force );
+	float Torque = point_square.CrossProd( force );
 	// Actual moment of inertia of square = ((2 * width * width) / 12) * mass;
 	float momentOfInertia = 200.0f;
 	float angularAccel = Torque / momentOfInertia;

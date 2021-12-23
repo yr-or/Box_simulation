@@ -65,7 +65,7 @@ void Game::UpdateModel()
 
 	if (wnd.mouse.LeftIsPressed())
 	{
-		square.testRotation( { -10.0f, 0.0f }, Vec2( wnd.mouse.GetPos() ), 1 );
+		square.applyForce( { -5.0f, 0.0f }, Vec2( wnd.mouse.GetPos() ), 1 );
 	}
 
 	square.Update();
