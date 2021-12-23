@@ -51,21 +51,25 @@ bool Square::DoCollisions()
 		if (!collisionTop && Graphics::IsTouchingTop(corner))
 		{
 			vel.y = -vel.y;
+			angle_vel = -angle_vel;
 			collisionTop = true;
 		}
 		if (!collisionLeft && Graphics::IsTouchingLeft( corner ))
 		{
 			vel.x = -vel.x;
+			angle_vel = -angle_vel;
 			collisionLeft = true;
 		}
 		if (!collisionBot && Graphics::IsTouchingBot( corner ))
 		{
 			vel.y = -vel.y;
+			angle_vel = -angle_vel;
 			collisionBot = true;
 		}
 		if (!collisionRight && Graphics::IsTouchingRight( corner ))
 		{
 			vel.x = -vel.x;
+			angle_vel = -angle_vel;
 			collisionRight = true;
 		}
 	}
@@ -88,5 +92,7 @@ void Square::Update()
 		angle_deg += angle_vel;
 	}
 }
+
+
 
 

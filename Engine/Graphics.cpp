@@ -381,7 +381,7 @@ bool Graphics::IsOutsideScreen( const Vec2& v )
 
 bool Graphics::IsTouchingTop( const Vec2& v )
 {
-	if (v.y <= 0.0f)
+	if (std::round(v.y) <= 0)
 	{
 		return true;
 	}
@@ -390,7 +390,7 @@ bool Graphics::IsTouchingTop( const Vec2& v )
 
 bool Graphics::IsTouchingLeft( const Vec2& v )
 {
-	if (v.x <= 0.0f)
+	if (std::round(v.x) <= 0)
 	{
 		return true;
 	}
@@ -399,7 +399,7 @@ bool Graphics::IsTouchingLeft( const Vec2& v )
 
 bool Graphics::IsTouchingBot( const Vec2& v )
 {
-	if (v.y >= ScreenHeight)
+	if (std::round(v.y) >= ScreenHeight)
 	{
 		return true;
 	}
@@ -408,7 +408,7 @@ bool Graphics::IsTouchingBot( const Vec2& v )
 
 bool Graphics::IsTouchingRight( const Vec2& v )
 {
-	if (v.x >= 800.0f)
+	if (std::round(v.x) >= ScreenWidth)
 	{
 		return true;
 	}
