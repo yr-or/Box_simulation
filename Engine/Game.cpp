@@ -42,6 +42,22 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	square.Update();
+	if (wnd.kbd.KeyIsPressed( VK_UP ))
+	{
+		square.testLinearMotion( {0.0f, -10.0f }, 1 );
+	}
+	if (wnd.kbd.KeyIsPressed( VK_LEFT ))
+	{
+		square.testLinearMotion( { -10.0f, 0.0f }, 1 );
+	}
+	if (wnd.kbd.KeyIsPressed( VK_DOWN ))
+	{
+		square.testLinearMotion( { 0.0f, 10.0f }, 1 );
+	}
+	if (wnd.kbd.KeyIsPressed( VK_RIGHT ))
+	{
+		square.testLinearMotion( { 10.0f, 0.0f }, 1 );
+	}
 }
 
 void Game::ComposeFrame()

@@ -40,6 +40,11 @@ public:
 		return *this = *this * rhs;
 	}
 
+	_Vec2 operator/( T rhs ) const
+	{
+		return _Vec2( x / rhs, y / rhs );
+	}
+
 	_Vec2 operator-( const _Vec2& rhs ) const
 	{
 		return _Vec2( x - rhs.x, y - rhs.y );

@@ -93,6 +93,17 @@ void Square::Update()
 	}
 }
 
+void Square::testRotation( const Vec2& force, const Vec2& radius )
+{
+
+}
+
+void Square::testLinearMotion( const Vec2& force, const float time )
+{
+	Vec2 accel = force / mass;
+	vel = vel + accel * time;
+}
+
 
 
 
