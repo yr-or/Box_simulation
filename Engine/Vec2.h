@@ -105,6 +105,11 @@ public:
 		return { x_tmp, y_tmp };
 	}
 
+	float CrossProd( const _Vec2& rhs ) const
+	{
+		return x * rhs.y - y * rhs.x;
+	}
+
 public:
 	T x;
 	T y;

@@ -1,5 +1,5 @@
 #include "Square.h"
-
+#include <math.h>
 
 Square::Square( int x, int y, int width, float angle_deg )
 	:
@@ -17,15 +17,14 @@ void Square::Draw( Graphics& gfx ) const
 	gfx.DrawSquare( center_pos, width, topleft, color, angle_deg );
 }
 
-Vec2 Square::GetScreenVec( Vec2 v )
+Vec2 Square::SquareToScreen( Vec2 v )
 {
-	Vec2 newt = (v + center_pos);
-	return newt;
+	return (v + center_pos);
 }
 
-Vec2 Square::GetSquareVec( Vec2 v )
+Vec2 Square::ScreenToSquare( Vec2 v )
 {
-	return v + center_pos;
+	return v - center_pos;
 }
 
 
@@ -40,10 +39,10 @@ bool Square::DoCollisions()
 	bool collisionLeft = false;
 	bool collisionBot = false;
 	bool collisionRight = false;
-	Vec2 topleft_screen = GetScreenVec( topleft.Rotate( angle_deg ) );
-	Vec2 topright_screen = GetScreenVec( topright.Rotate( angle_deg ) );
-	Vec2 botleft_screen = GetScreenVec( botleft.Rotate( angle_deg ) );
-	Vec2 botright_screen = GetScreenVec( botright.Rotate( angle_deg ) );
+	Vec2 topleft_screen = SquareToScreen( topleft.Rotate( angle_deg ) );
+	Vec2 topright_screen = SquareToScreen( topright.Rotate( angle_deg ) );
+	Vec2 botleft_screen = SquareToScreen( botleft.Rotate( angle_deg ) );
+	Vec2 botright_screen = SquareToScreen( botright.Rotate( angle_deg ) );
 	Vec2 corners[] = { topleft_screen, topright_screen, botleft_screen, botright_screen };
 	
 	for (Vec2 corner : corners)
@@ -93,15 +92,42 @@ void Square::Update()
 	}
 }
 
-void Square::testRotation( const Vec2& force, const Vec2& radius )
+void Square::testRotation( const Vec2& force, const Vec2& point, const float time )
 {
-
+	Vec2 squarePoint = ScreenToSquare( point );
+	applyForce( force, squarePoint, time );
 }
 
 void Square::testLinearMotion( const Vec2& force, const float time )
 {
 	Vec2 accel = force / mass;
 	vel = vel + accel * time;
+}
+
+void Square::applyForce( const Vec2& force, const Vec2& point, const float time )
+{
+	// point = point on square that force is applied
+	
+	// Calculate velocity
+	Vec2 accel = force / mass;
+	vel = vel + accel * time;
+
+	// Calculate angular velocity
+	auto Pi = std::acos( -1 );
+	float Torque = point.CrossProd( force );
+	// Actual moment of inertia of square = ((2 * width * width) / 12) * mass;
+	float momentOfInertia = 200.0f;
+	float angularAccel = Torque / momentOfInertia;
+	float angular_vel = angle_vel*2*Pi + angularAccel * time;
+	angle_vel = angular_vel / (2 * Pi);
+}
+
+void Square::Reset()
+{
+	center_pos = { 400.0f, 300.0f };
+	vel = { 0.0f, 0.0f };
+	angle_vel = 0.0f;
+	angle_deg = 0.0f;
 }
 
 
