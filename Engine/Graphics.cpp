@@ -355,7 +355,10 @@ void Graphics::FillSurround( Vec2 v, Color c )
 	{
 		for (int i = v.x - 1; i < v.x + 1; i++)
 		{
-			PutPixel( i, j, c );
+			if (!IsOutsideScreen( Vec2(i, j) ))
+			{
+				PutPixel( i, j, c );
+			}
 		}
 	}
 }
@@ -426,13 +429,16 @@ void Graphics::DrawSquare( Vec2 center, float width, Vec2 topleft, Color c, floa
 			Vec2 point = Vec2( i, j ) - center;				// Point relative to screen origin
 			Vec2 point_rotated = point.Rotate( angle_deg ); // Point rotated about square center
 			Vec2 new_point = point_rotated + center;		// Convert back to point relative to screen origin
-			PutPixel( new_point, c );
-
-			if (j > y_start && j < width + y_start)
+			if (!IsOutsideScreen( new_point ))
 			{
-				if (i > x_start && i < width + x_start)
+				PutPixel( new_point, c );
+
+				if (j > y_start && j < width + y_start)		// Only fill interior surrounding pixels
 				{
-					FillSurround( new_point, c );
+					if (i > x_start && i < width + x_start)
+					{
+						FillSurround( new_point, c );
+					}
 				}
 			}
 		}
