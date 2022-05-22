@@ -1,11 +1,12 @@
 #include "Square.h"
 #include <math.h>
 
-Square::Square( int x, int y, int width, float angle_deg )
+Square::Square( int x, int y, int width, float angle_deg, Color color )
 	:
 	center_pos( x, y ),
 	width( width ),
 	angle_deg(angle_deg),
+	color( color ),
 	topleft( -(width / 2), -(width / 2) ),
 	topright( (width / 2), -(width / 2) ),
 	botleft( -(width / 2), (width / 2) ),
@@ -27,8 +28,8 @@ Vec2 Square::ScreenToSquare( Vec2 v )
 	return v - center_pos;
 }
 
-
-bool Square::DoCollisions()
+// Return true if colliding with wall and update velocity (not center_pos)
+bool Square::DoWallCollisions()
 {
 	/*
 		If Square is touching wall
@@ -44,7 +45,7 @@ bool Square::DoCollisions()
 	Vec2 botleft_screen = SquareToScreen( botleft.Rotate( angle_deg ) );
 	Vec2 botright_screen = SquareToScreen( botright.Rotate( angle_deg ) );
 	Vec2 corners[] = { topleft_screen, topright_screen, botleft_screen, botright_screen };
-	
+
 	for (Vec2 corner : corners)
 	{
 		if (!collisionTop && Graphics::IsTouchingTop( corner ))
@@ -88,10 +89,25 @@ bool Square::DoCollisions()
 	return collisionTop || collisionLeft || collisionBot || collisionRight;
 }
 
+bool Square::DoBoxCollisions()
+{
+	return false;
+}
+
+bool Square::DoCollisions()
+{
+	// Do wall collisions
+	// Do square collisions
+
+	return false;
+}
+
 void Square::Update()
 {
+	// Update variables
+
 	center_pos += vel;
-	if (DoCollisions())
+	if (DoWallCollisions())
 	{
 		center_pos += vel;
 	}

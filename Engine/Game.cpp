@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	square( 300, 200, 100 )
+	env()
 {}
 
 void Game::Go()
@@ -41,6 +41,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	/*
 	if (wnd.kbd.KeyIsPressed( VK_UP ))
 	{
 		square.testLinearMotion( {0.0f, -10.0f }, 1 );
@@ -65,13 +66,14 @@ void Game::UpdateModel()
 
 	if (wnd.mouse.LeftIsPressed())
 	{
-		square.applyForce( { -5.0f, 0.0f }, Vec2( wnd.mouse.GetPos() ), 1 );
+		square.applyForce( { -5.0f, 5.0f }, Vec2( wnd.mouse.GetPos() ), 1 );
 	}
+	*/
 
-	square.Update();
+	env.Update();
 }
 
 void Game::ComposeFrame()
 {
-	square.Draw( gfx );
+	env.Draw( gfx );
 }

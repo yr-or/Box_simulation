@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "FrameTimer.h"
 #include "Square.h"
+#include "Env.h"
 
 class Game
 {
@@ -45,6 +46,6 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
-	Square square;
+	Env env;
 	/********************************/
 };

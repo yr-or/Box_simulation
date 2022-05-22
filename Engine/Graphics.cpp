@@ -437,7 +437,7 @@ void Graphics::DrawSquare( Vec2 center, float width, Vec2 topleft, Color c, floa
 				{
 					if (i > x_start && i < width + x_start)
 					{
-						FillSurround( new_point, c );
+						//FillSurround( new_point, c );
 					}
 				}
 			}
